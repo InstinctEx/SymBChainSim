@@ -98,10 +98,14 @@ class Network:
                 Network.set_bandwidths(n)
         else:
             if Parameters.network["bandwidth"]["debug"]:
-                node.bandwidth = 1
+                node.bandwidth = Parameters.network["bandwidth"]["debug_value"]
             else:
-                node.bandwidth = random.normalvariate(Parameters.network["bandwidth"]["mean"], Parameters.network["bandwidth"]["dev"])
-                print(node.bandwidth)
+                bandwidth = random.normalvariate(Parameters.network["bandwidth"]["mean"], Parameters.network["bandwidth"]["dev"])
+                while bandwidth < Parameters.network["bandwidth"]["lower_bound"]:
+                    bandwidth = random.normalvariate(Parameters.network["bandwidth"]["mean"], Parameters.network["bandwidth"]["dev"])
+
+                node.bandwidth = bandwidth
+
     @staticmethod
     def assign_neighbours(node=None):
         '''
@@ -126,21 +130,23 @@ class Network:
         # transmission delay
         delay = message_size / Network.get_bandwidth(sender, receiver)
 
-        if Parameters.network["use_latency"] == "measured":
-            delay += Network.latency_map[sender.location][receiver.location][0] / 1000
-        elif Parameters.network["use_latency"] == "distance":
-            dist = Network.distance_map[sender.location][receiver.location]
-            dist = dist * 0.621371 # conversion to miles since formula is based on miles
-            '''
-                y = 0.022x + 4.862 is fitted to match the round trip latency between 2
-                locations based on distance source: 
-                Goonatilake, Rohitha, and Rafic A. Bachnak. "Modeling latency in a network distribution." Network and Communication Technologies 1.2 (2012): 1
-                
-                / 2 to get the single trip latency
-                / 1000 to get seconds (formula fitted on ms)
-            '''
-            delay += ((0.022 * dist + 4.862) / 2) / 1000
-        
+        if Parameters.network["location"]:
+            if Parameters.network["use_latency"] == "measured":
+                delay += Network.latency_map[sender.location][receiver.location][0] / 1000
+            elif Parameters.network["use_latency"] == "distance":
+                dist = Network.distance_map[sender.location][receiver.location]
+                dist = dist * 0.621371 # conversion to miles since formula is based on miles
+                '''
+                    y = 0.022x + 4.862 is fitted to match the round trip latency between 2
+                    locations based on distance source: 
+                    Goonatilake, Rohitha, and Rafic A. Bachnak. "Modeling latency in a network distribution." Network and Communication Technologies 1.2 (2012): 1
+                    
+                    / 2 to get the single trip latency
+                    / 1000 to get seconds (formula fitted on ms)
+                '''
+                delay += ((0.022 * dist + 4.862) / 2) / 1000
+        else:
+            delay += 10 / 1000
 
         delay += Parameters.network["queueing_delay"] + Parameters.network["processing_delay"]
 
@@ -157,7 +163,6 @@ class Network:
             for n in Network.nodes:
                 n.location = random.choice(Network.locations)
                 tools.debug_logs(msg=f"{n}: {n.location}")
-
         else:
             if location is None:
                 node.location = random.choice(Network.locations)

@@ -33,13 +33,15 @@ class Manager:
         self.sim = None
         self.behaviour = None
 
-    def set_up(self):
+    def set_up(self, config=None, **kwargs):
         '''
             Initial tasks required for the simulation to start
         '''
         # load params (cmd and env)
         tools.set_env_vars_from_config()
-        Parameters.load_params_from_config()
+
+        Parameters.load_params_from_config(config, **kwargs)
+
         Parameters.application["CP"] = CPs[Parameters.simulation["init_CP"]]
 
         # create simulator
@@ -122,21 +124,33 @@ class Manager:
 
         rem_node = self.sim.nodes.pop()
 
-    def update_sim(self):
+    def update_sim(self, **kwargs):
         '''
             Time based updates that are not controlled by system events can be triggered here
         '''
         ################ Start debug at time #################
         if 'start_debug' in os.environ and int(os.environ['start_debug']) <= self.sim.clock:
             os.environ['debug'] = "True"
+        
+        ############### Costume update method ###############
+        '''
+            When calling
+        '''
+        if "update" in kwargs:
+            for update_func in kwargs["update"]:
+                if isinstance(update_func, tuple):
+                    update_func[0](self, **update_func[1])
+                else:
+                    update_func(self)
+
     
-    def run(self):
+    def run(self, **kwargs):
         ''' Managed simulation loop'''
         self.behaviour.update_behaviour()
 
         while self.sim.clock <= Parameters.simulation['simTime']:
             self.sim.sim_next_event()
-            self.update_sim()
+            self.update_sim(**kwargs)
 
     ################################################################################################
                             ################ SYSTEM EVENTS #################

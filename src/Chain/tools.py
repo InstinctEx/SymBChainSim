@@ -47,7 +47,6 @@ def debug_logs(msg, **kwargs):
         if "command" in kwargs:
             return cmd
 
-
 def get_named_cmd_arg(name):
     if name in sys.argv:
         return sys.argv[sys.argv.index(name)+1]
@@ -193,5 +192,3 @@ def write_yaml(data, path):
 
 def color(string, c=44):
     return f'\x1b[1;37;{c}m' + string + '\x1b[0m'
-
-###################### Distriburions #############

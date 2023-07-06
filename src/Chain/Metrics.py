@@ -4,6 +4,8 @@ from Chain.Parameters import Parameters
 
 import matplotlib.pyplot as plt
 import numpy as np
+import json
+
 class SimulationState:
     '''
         Stores the state of the simulation.
@@ -38,6 +40,24 @@ class SimulationState:
                 SimulationState.events[type].append(event.to_serializable())
             else:
                 SimulationState.events[type] = [event.to_serializable()]
+    
+    @staticmethod
+    def simplify_state():   
+
+        simplify_block = lambda x: {"id": x["id"],
+                                    "depth" : x["depth"],
+                                    "created": x["time_created"],
+                                    "added": x["time_added"],
+                                    "miner": x["miner"],
+                                    "consensus": x["consensus"]}
+        
+        simple_state = {}
+        for key, value in SimulationState.blockchain_state.items():
+            value["blockchain"] = [simplify_block(x) for x in value["blockchain"]]
+            value["pool"] = len(value["pool"])
+            simple_state[key] = value
+        
+        return simple_state
             
 class Metrics:
     latency = {}
@@ -46,13 +66,29 @@ class Metrics:
 
     decentralisation = {}
 
-    
+    @staticmethod
+    def save_to_disk(name="unanamed_results.json"):
+
+        all_json = {
+            "Latency": Metrics.latency,
+            "Throughput": Metrics.throughput,
+            "Blocktime": Metrics.blocktime,
+            "Decentralisaion": Metrics.decentralisation,
+            "Params" : Parameters.all_params(serializable=True),
+            "State": SimulationState.simplify_state(),
+            "Events": SimulationState.events,
+        }
+
+        with open(f"Results/{name}","w+") as f:
+            json.dump(all_json,f,indent=2)
+
     @staticmethod
     def measure_all(state):
         Metrics.measure_latency(state)
         Metrics.measure_throughput(state)
         Metrics.measure_interblock_time(state)
         Metrics.measure_decentralisation_nodes(state)
+
 
     @staticmethod
     def print_metrics():
@@ -61,7 +97,7 @@ class Metrics:
 
         #latency
         for key, value in Metrics.latency.items():
-            averages[key]["Latency"] = val.format(v=value["AVG"])
+            averages[key]["Avg Latency"] = val.format(v=value["AVG"])
 
         # throughput
         for key, value in Metrics.throughput.items():
@@ -69,12 +105,11 @@ class Metrics:
 
         # blockctime
         for key, value in Metrics.blocktime.items():
-            averages[key]["Blocktime"] = val.format(v=value["AVG"])
+            averages[key]["Avg Blocktime"] = val.format(v=value["AVG"])
 
         # decentralisation
         for key, value in Metrics.decentralisation.items():
-            val = "{v:.6f}"
-            averages[key]["Decentralisation"] = val.format(v=value)
+            averages[key]["Decentralisation(Gini)"] = value
 
         print("-"*30, "METRICS", "-"*30)
 

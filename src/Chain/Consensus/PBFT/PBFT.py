@@ -50,19 +50,20 @@ def reset_msgs(node):
     node.state.cp_state.msgs = {'prepare': [], 'commit': []}
     Rounds.reset_votes(node)
 
-
-def get_miner(node, round_robin=True):
-    if round_robin:  # new miner in a round robin fashion
+def get_miner(node):
+    if Parameters.execution["miner_selection"] == "round_robin": 
+        # new miner in a round robin fashion
         node.state.cp_state.miner = node.state.cp_state.round.round % Parameters.application[
             "Nn"]
-    else:  # get new miner based on the hash of the last block
-        node.state.cp_state.miner = node.last_block.id % Parameters.application["Nbp"]
-
-
+    elif Parameters.execution["miner_selection"] == "hash": 
+        # get new miner based on the hash of the last block
+        node.state.cp_state.miner = node.last_block.id % Parameters.application["Nn"]
+    else:
+        raise(TypeError(f"No such miner slection algorithm: \"{Parameters.execution['miner_selection']}\"" ))
+            
 def init(node, time=0, starting_round=0):
     set_state(node)
     start(node, starting_round, time)
-
 
 def create_PBFT_block(node, time):
     # calculate block creation delays
@@ -104,7 +105,6 @@ def create_PBFT_block(node, time):
         return -1, -1
 
 ########################## HANDLERER ###########################
-
 
 def handle_event(event):  # specific to PBFT - called by events in Handler.handle_event()
     if event.payload['type'] == 'pre_prepare':

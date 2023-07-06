@@ -51,12 +51,16 @@ def reset_msgs(node):
     node.state.cp_state.msgs = {'prepare': [], 'commit': []}
     Rounds.reset_votes(node)
 
-def get_miner(node, round_robin=False):
-    if round_robin:  # new miner in a round robin fashion
+def get_miner(node):
+    if Parameters.execution["miner_selection"] == "round_robin": 
+        # new miner in a round robin fashion
         node.state.cp_state.miner = node.state.cp_state.round.round % Parameters.application[
             "Nn"]
-    else:  # get new miner based on the hash of the last block
+    elif Parameters.execution["miner_selection"] == "hash": 
+        # get new miner based on the hash of the last block
         node.state.cp_state.miner = node.last_block.id % Parameters.application["Nn"]
+    else:
+        raise(f"No such miner slection algorithm {Parameters.execution['miner_selection']}")
 
 
 def init(node, time=0, starting_round=0):
@@ -184,7 +188,7 @@ def prepare(event):
 
         # if we have enough prepare messages
         if not state.fast_path:
-            # leader does not issue a prepare message
+            # -1 since leader does not issue a prepare message
             if len(state.msgs['prepare']) >= Parameters.application["required_messages"] - 1:
                 # change to prepared
                 state.state = 'prepared'
@@ -202,23 +206,13 @@ def prepare(event):
                 process_vote(node, 'commit', node)
                 return 'new_state'
         else:
-            # leader does not issue a prepare message
+            # -1 since leader does not issue a prepare message
             if len(state.msgs['prepare']) == Parameters.application["Nn"]-1:
                 if state.block is None:
                     state.block = block.copy()
 
                 node.add_block(state.block, time)
-
-                if node == state.miner:
-                    payload = {
-                        'type': 'new_block',
-                        'block': block,
-                        'round': state.round.round,
-                    }
-
-                    node.scheduler.schedule_broadcast_message(
-                        node, time, payload, handle_event)
-
+                
                 start(node, state.round.round + 1, time)
 
                 return 'new_state'
@@ -439,6 +433,7 @@ def start(node, new_round, time):
         if creation_time == -1:
             print(f"Block creationg failed at {time} for CP {NAME}")
             return 0
+        
 
         state.state = 'pre_prepared'
         state.block = block.copy()

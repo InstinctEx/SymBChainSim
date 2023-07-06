@@ -163,9 +163,9 @@ class Node():
                 "alive": self.state.alive,
                 "cp": self.state.cp.NAME
             },
-
-            "behaviour": self.behaviour
+            "behaviour": self.behaviour_state_to_string
         }
+        
 
     def update(self, time, round=-1):
         if Parameters.application["CP"] != self.state.cp:
@@ -220,6 +220,11 @@ class Node():
         # update transaction pool removed verified transactions
         ids = [x.id for x in block.transactions]
         self.pool = [x for x in self.pool if x.id not in ids]
+        remaining_tx = [x for x in self.pool if x.timestamp <= time]
+        num_remaining = len(remaining_tx)
+
+        block.extra_data["remaining_tx"] = remaining_tx
+        block.extra_data["num_remaining"] = num_remaining
 
     def add_event(self, event):
         ''' adds event to the queue of the node if the node is online'''

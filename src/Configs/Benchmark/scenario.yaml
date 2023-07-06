@@ -1,5 +1,5 @@
 simulation:
-  init_CP: "PBFT"
+  init_CP: "BigFoot"
   simTime: 600
   interval_switch: False
   interval_mean: 30
@@ -7,7 +7,7 @@ simulation:
 application:
   Nn: 4
   TI_dur: 25
-  Tn: 25
+  Tn: 50
   Tsize: 0.01
 
 execution:
@@ -24,6 +24,7 @@ data:
 network:
   base_msg_size: 0.2
   gossip: False
+  location: False
   num_neighbours: 2
   use_latency: measured 
   same_city_latency_ms: 10
@@ -32,9 +33,11 @@ network:
   processing_delay: 0
 
   bandwidth:
-    mean: 2
-    dev: .5
+    mean: 50
+    dev: 50
+    lower_bound: 12
     debug: True
+    debug_value: 22
 
 consensus:
   BigFoot: Chain/Consensus/BigFoot/BigFoot_config.yaml

@@ -1,4 +1,4 @@
-import yaml, os
+import yaml, os, json
 
 def read_yaml(path):
     with open(path, 'rb') as f:
@@ -20,34 +20,47 @@ class Parameters:
     PBFT = {}
 
     @staticmethod
-    def export_state():
-        return {
+    def all_params(serializable=False):
+        params = {
             "simulation": Parameters.simulation,
             "application": Parameters.application,
-            # "execution": Parameters.execution,
-            # "data": Parameters.data,
-            # "consensus": Parameters.consensus,
-            # "network": Parameters.network,
+            "execution": Parameters.execution,
+            "data": Parameters.data,
+            "consensus": Parameters.consensus,
+            "network": Parameters.network,
 
-            # "BigFoot": Parameters.BigFoot,
-            # "PBFT": Parameters.PBFT
+            "BigFoot": Parameters.BigFoot,
+            "PBFT": Parameters.PBFT
         }
-    
-    @staticmethod
-    def load_state(state):
-        Parameters.simulation = state["simulation"]
-        Parameters.application = state["application"]
-        Parameters.execution = state["execution"]
-        Parameters.data = state["data"]
-        Parameters.consensus = state["consensus"]
-        Parameters.network = state["network"]
+        
+        if serializable:
+            ser_params = {}
+            for p_key, data in params.items():
+                temp = {}
+                for key, value in data.items():
+                    try:
+                        json.dumps(value)
+                        temp[key] = value
+                    except TypeError:
+                        pass
 
-        Parameters.BigFoot = state["BigFoot"]
-        Parameters.PBFT = state["PBFT"]
+                ser_params[p_key] = temp
 
+            return ser_params
+        
+        return params
+                
     @staticmethod
-    def load_params_from_config():
-        params = read_yaml(f"Configs/{os.environ['config']}.yaml")
+    def load_params_from_config(config, **kwargs):
+        if "data" in kwargs and kwargs["data"]:
+            params = kwargs["data"]
+        else:
+            if config is None:
+                config = f"Configs/{os.environ['config']}.yaml"
+            else:
+                config = f"Configs/{config}"
+
+            params = read_yaml(config)
 
         Parameters.simulation = params["simulation"]
         Parameters.simulation["events"] = {} # cnt events of each type

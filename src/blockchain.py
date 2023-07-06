@@ -9,6 +9,10 @@ import Chain.Consensus.PBFT.PBFT as PBFT
 
 from Chain.Metrics import SimulationState, Metrics
 
+from Chain.Parameters import Parameters
+
+import json
+
 ############### SEEDS ############
 seed = 5
 random.seed(seed)
@@ -35,6 +39,7 @@ def run():
     Metrics.measure_all(SimulationState.blockchain_state)
     Metrics.print_metrics()
 
+    Metrics.save_to_disk()
     print(f"\nSIMULATION EXECUTION TIME: {runtime}")
 
     

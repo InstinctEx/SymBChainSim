@@ -29,6 +29,11 @@ def create_local_sync_event(desynced_node, request_node, time):
     missing_blocks = [b.copy() for b in request_node.blockchain if b.depth > latest_block.depth]    
 
     total_delay = 0    
+
+    # Assuming node receives block 1 by 1 thus we calculate the individual delays of blocks
+    # note: 
+    #   NODE IS ONLY UPDATED AFTER ALL THE BLOCKS ARE RECEIVED BUT DELAYS REFLECT
+    #   THE PROCESS OF SENDING THE BLOCKS 1 by 1
     
     for i, b in enumerate(missing_blocks):
         delay_network = Network.calculate_message_propagation_delay(
@@ -62,7 +67,7 @@ def create_local_sync_event(desynced_node, request_node, time):
         }
 
         desynced_node.scheduler.schedule_event(
-            desynced_node, time+delay, payload, handler, queue="sync")
+            desynced_node, time+total_delay, payload, handler, queue="sync")
     
 
 def handle_local_sync_event(event):
