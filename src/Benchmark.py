@@ -46,20 +46,20 @@ def benachmark():
 
     print("Done!")
 
-    # for n in manager.sim.nodes:
-    #     print(n, '| Total_blocks:', n.blockchain_length(),
-    #         '| pbft:',len([x for x in n.blockchain if x.consensus == PBFT]),
-    #         '| bf:',len([x for x in n.blockchain if x.consensus == BigFoot]),
-    #         )
+    for n in manager.sim.nodes:
+        print(n, '| Total_blocks:', n.blockchain_length(),
+            '| pbft:',len([x for x in n.blockchain if x.consensus == PBFT]),
+            '| bf:',len([x for x in n.blockchain if x.consensus == BigFoot]),
+            )
     
-    # SimulationState.store_state(manager.sim)
+    SimulationState.store_state(manager.sim)
 
-    # Metrics.measure_all(SimulationState.blockchain_state)
-    # Metrics.print_metrics()
+    Metrics.measure_all(SimulationState.blockchain_state)
+    Metrics.print_metrics()
 
-    # print(Parameters.simulation["events"])
+    print(Parameters.simulation["events"])
 
-    # print(st.mean([b.extra_data["num_remaining"] for b in manager.sim.nodes[0].blockchain]))
+    print(st.mean([b.extra_data["num_remaining"] for b in manager.sim.nodes[0].blockchain]))
 
     return {
         "latency": st.mean([value["AVG"] for value in Metrics.latency.values()]),
@@ -69,11 +69,11 @@ def benachmark():
 
 def run_all():
     cummulative_results = []
-    for _ in range(10):
+    for _ in range(1):
         cummulative_results.append(benachmark())
 
       
-    plot(cummulative_results)
+    #plot(cummulative_results)
 
 def plot(results): 
     if isinstance(results, list):
