@@ -1,46 +1,47 @@
 simulation:
-  init_CP: "BigFoot"
-  simTime: 600
-  interval_switch: True
-  interval_mean: 30
+  init_CP: "BigFoot"  # Consesus protocol to be used
+  simTime: 600  # Simulation run time       
+  ##################################################   
+  interval_switch: False # Switch between PBFT and BigFoot in intervals (USED FOR EVALUATING SWITCHING ALGORITHM / DEBUGGING)
+  interval_mean: 30 # mean duration of switch intervals
 
 application:
-  Nn: 5
-  TI_dur: 25
-  Tn: 25
-  Tsize: 0.01
+  Nn: 5 # Number of nodes in the system
+  TI_dur: 25  # Duration of time interval (SBS functions using time intervals in each interval txions are generated, and the system parameters can be updated)
+  Tn: 25 # Number of transactions to be generated per second
+  Tsize: 0.01 # Size of transactions
 
 execution:
-  creation_time: 0.1
-  block_val_delay: 0.5
-  msg_val_delay: 0.1
-  sync_message_request_delay: 1
+  creation_time: 0.1 # block creation time
+  block_val_delay: 0.5 # block validation time
+  msg_val_delay: 0.1  # message validation time
+  sync_message_request_delay: 1 # delay of requesting block data for sync
 
 data:
-  Bsize: 1
-  block_interval: 0.5
+  Bsize: 1 # block size 
+  block_interval: 0.5 # block interval
 
 network:
-  base_msg_size: 0.2
-  gossip: False
-  num_neighbours: 2
-  use_latency: measured 
-  same_city_latency_ms: 10
-  same_city_dev_ms: 5
-  queueing_delay: 0
-  processing_delay: 0
+  base_msg_size: 0.2 # size of base message (signature, headers etc..)
+  gossip: False # use the Gossip P2P protocol
+  num_neighbours: 2  # number of neighbours per node
+  use_latency: measured # Type of latency ------ measured: based on data set ----- distance: calculated based on distance between nodes
+  same_city_latency_ms: 10 # define the latency between nodes in the same city
+  same_city_dev_ms: 5 # deviation for normal dist
+  queueing_delay: 0 # network queeing delay
+  processing_delay: 0 # network processing delay
 
   bandwidth:
     mean: 12
     dev: 2
-    debug: False
+    debug: True # will set all BW to the same value (used for debbugging)
 
 consensus:
-  BigFoot: Chain/Consensus/BigFoot/BigFoot_config.yaml
-  PBFT: Chain/Consensus/PBFT/PBFT_config.yaml
+  BigFoot: Chain/Consensus/BigFoot/BigFoot_config.yaml # path to BigFoot config file
+  PBFT: Chain/Consensus/PBFT/PBFT_config.yaml # path to PBFT config file
 
 behaviour:
-  behaviour_interval: 10
+  behaviour_interval: 10 # how often behaviour will be updated
 
   byzantine_nodes:
     # percent of nodes that will be byzantine
