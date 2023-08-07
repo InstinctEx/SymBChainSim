@@ -101,7 +101,10 @@ class Network:
                 node.bandwidth = 1
             else:
                 node.bandwidth = random.normalvariate(Parameters.network["bandwidth"]["mean"], Parameters.network["bandwidth"]["dev"])
-                print(node.bandwidth)
+                # ensuring bandwidth is a possitive non-zero value
+                while node.bandwidth <= 0:
+                    node.bandwidth = random.normalvariate(Parameters.network["bandwidth"]["mean"], Parameters.network["bandwidth"]["dev"])
+
     @staticmethod
     def assign_neighbours(node=None):
         '''

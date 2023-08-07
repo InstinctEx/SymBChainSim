@@ -1,5 +1,5 @@
 simulation:
-  init_CP: "BigFoot"  # Consesus protocol to be used
+  init_CP: "PBFT"  # Consesus protocol to be used
   simTime: 600  # Simulation run time       
   ##################################################   
   interval_switch: False # Switch between PBFT and BigFoot in intervals (USED FOR EVALUATING SWITCHING ALGORITHM / DEBUGGING)
@@ -31,10 +31,10 @@ network:
   queueing_delay: 0 # network queeing delay
   processing_delay: 0 # network processing delay
 
-  bandwidth:
-    mean: 12
+  bandwidth: # in MB/s
+    mean: 5
     dev: 2
-    debug: True # will set all BW to the same value (used for debbugging)
+    debug: False # will set all BW to the same value (used for debbugging)
 
 consensus:
   BigFoot: Chain/Consensus/BigFoot/BigFoot_config.yaml # path to BigFoot config file
@@ -46,7 +46,7 @@ behaviour:
   byzantine_nodes:
     # percent of nodes that will be byzantine
     # (percentange based on how many faulty nodes the network can tolerate)
-    num_byzantine: 1
+    num_byzantine: 0
   sync:
     # define the chance a byzantine node will send bad sync data 
     # (and the delay that will cause)
@@ -63,7 +63,7 @@ behaviour:
   crash_probs:
     # percent of nodes that can crash (go offiline)
     # (based on the number of faulty nodes that the CP can tolerate) 
-    faulty_nodes: 1
+    faulty_nodes: 0
     # probabilities for crash
     mean_fault_time: 
       low: 30
