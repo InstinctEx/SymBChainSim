@@ -7,7 +7,8 @@ import random, numpy
 from Chain.Consensus.PBFT.PBFT import PBFT
 from Chain.Consensus.BigFoot.BigFoot import BigFoot
 
-from Chain.Metrics import SimulationState, Metrics
+from Chain.Metrics import Metrics
+from Chain.SimState import SimulationState
 
 ############### SEEDS ############
 seed = 5

@@ -7,7 +7,7 @@ import Chain.tools as tools
 
 from Chain.Event import Event, MessageEvent
 
-from Chain.Metrics import SimulationState
+from Chain.SimState import SimulationState
 
 '''
     Handling and running Events
