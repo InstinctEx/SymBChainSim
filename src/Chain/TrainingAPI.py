@@ -104,6 +104,3 @@ def example_for_training():
             # generate and add the next set of generated transactions to the system
             txions = QL_generate_txions(environment.sim.clock)
             #environment.add_interval_transactions(txions, use_priority=True)
-
-
-example_for_training()
