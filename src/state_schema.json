@@ -1,0 +1,533 @@
+{
+    "timestamp": 12.370993999999998,
+    "0": {
+        "id": 0,
+        "blockchain": [
+            {
+                "id": 8167,
+                "depth": 1,
+                "previous": 6164,
+                "time_created": 3.1,
+                "time_added": 4.456981,
+                "miner": 4,
+                "consensus": "BigFoot",
+                "size": 0.04,
+                "max_size": 1,
+                "round": 0,
+                "transactions": [
+                    {
+                        "id": 1,
+                        "timestamp": 1,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 3,
+                        "timestamp": 3,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 2,
+                        "timestamp": 2,
+                        "size": 0.01,
+                        "priority": 2
+                    },
+                    {
+                        "id": 0,
+                        "timestamp": 0,
+                        "size": 0.01,
+                        "priority": 1
+                    }
+                ]
+            },
+            {
+                "id": 1085,
+                "depth": 2,
+                "previous": 8167,
+                "time_created": 7.609876,
+                "time_added": 8.965694999999998,
+                "miner": 2,
+                "consensus": "BigFoot",
+                "size": 0.04,
+                "max_size": 1,
+                "round": 1,
+                "transactions": [
+                    {
+                        "id": 5,
+                        "timestamp": 5,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 6,
+                        "timestamp": 6,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 7,
+                        "timestamp": 7,
+                        "size": 0.01,
+                        "priority": 2
+                    },
+                    {
+                        "id": 4,
+                        "timestamp": 4,
+                        "size": 0.01,
+                        "priority": 1
+                    }
+                ]
+            }
+        ],
+        "pool": [
+            {
+                "id": 8,
+                "timestamp": 8,
+                "size": 0.01,
+                "priority": 2
+            },
+            {
+                "id": 9,
+                "timestamp": 9,
+                "size": 0.01,
+                "priority": 1
+            }
+        ],
+        "neighbours": [
+            1,
+            4
+        ],
+        "location": "Seoul",
+        "bandwidth": 1,
+        "state": {
+            "synced": true,
+            "alive": true,
+            "cp": "BigFoot"
+        }
+    },
+    "1": {
+        "id": 1,
+        "blockchain": [
+            {
+                "id": 8167,
+                "depth": 1,
+                "previous": 6164,
+                "time_created": 3.1,
+                "time_added": 4.534591,
+                "miner": 4,
+                "consensus": "BigFoot",
+                "size": 0.04,
+                "max_size": 1,
+                "round": 0,
+                "transactions": [
+                    {
+                        "id": 1,
+                        "timestamp": 1,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 3,
+                        "timestamp": 3,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 2,
+                        "timestamp": 2,
+                        "size": 0.01,
+                        "priority": 2
+                    },
+                    {
+                        "id": 0,
+                        "timestamp": 0,
+                        "size": 0.01,
+                        "priority": 1
+                    }
+                ]
+            },
+            {
+                "id": 1085,
+                "depth": 2,
+                "previous": 8167,
+                "time_created": 7.609876,
+                "time_added": 9.01696,
+                "miner": 2,
+                "consensus": "BigFoot",
+                "size": 0.04,
+                "max_size": 1,
+                "round": 1,
+                "transactions": [
+                    {
+                        "id": 5,
+                        "timestamp": 5,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 6,
+                        "timestamp": 6,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 7,
+                        "timestamp": 7,
+                        "size": 0.01,
+                        "priority": 2
+                    },
+                    {
+                        "id": 4,
+                        "timestamp": 4,
+                        "size": 0.01,
+                        "priority": 1
+                    }
+                ]
+            }
+        ],
+        "pool": [
+            {
+                "id": 8,
+                "timestamp": 8,
+                "size": 0.01,
+                "priority": 2
+            },
+            {
+                "id": 9,
+                "timestamp": 9,
+                "size": 0.01,
+                "priority": 1
+            }
+        ],
+        "neighbours": [
+            4,
+            0
+        ],
+        "location": "Cromwell",
+        "bandwidth": 1,
+        "state": {
+            "synced": true,
+            "alive": true,
+            "cp": "BigFoot"
+        }
+    },
+    "2": {
+        "id": 2,
+        "blockchain": [
+            {
+                "id": 8167,
+                "depth": 1,
+                "previous": 6164,
+                "time_created": 3.1,
+                "time_added": 4.509876,
+                "miner": 4,
+                "consensus": "BigFoot",
+                "size": 0.04,
+                "max_size": 1,
+                "round": 0,
+                "transactions": [
+                    {
+                        "id": 1,
+                        "timestamp": 1,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 3,
+                        "timestamp": 3,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 2,
+                        "timestamp": 2,
+                        "size": 0.01,
+                        "priority": 2
+                    },
+                    {
+                        "id": 0,
+                        "timestamp": 0,
+                        "size": 0.01,
+                        "priority": 1
+                    }
+                ]
+            },
+            {
+                "id": 1085,
+                "depth": 2,
+                "previous": 8167,
+                "time_created": 7.609876,
+                "time_added": 8.992244999999999,
+                "miner": 2,
+                "consensus": "BigFoot",
+                "size": 0.04,
+                "max_size": 1,
+                "round": 1,
+                "transactions": [
+                    {
+                        "id": 5,
+                        "timestamp": 5,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 6,
+                        "timestamp": 6,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 7,
+                        "timestamp": 7,
+                        "size": 0.01,
+                        "priority": 2
+                    },
+                    {
+                        "id": 4,
+                        "timestamp": 4,
+                        "size": 0.01,
+                        "priority": 1
+                    }
+                ]
+            }
+        ],
+        "pool": [
+            {
+                "id": 8,
+                "timestamp": 8,
+                "size": 0.01,
+                "priority": 2
+            },
+            {
+                "id": 9,
+                "timestamp": 9,
+                "size": 0.01,
+                "priority": 1
+            }
+        ],
+        "neighbours": [
+            0,
+            3
+        ],
+        "location": "Austin",
+        "bandwidth": 1,
+        "state": {
+            "synced": true,
+            "alive": true,
+            "cp": "BigFoot"
+        }
+    },
+    "3": {
+        "id": 3,
+        "blockchain": [
+            {
+                "id": 8167,
+                "depth": 1,
+                "previous": 6164,
+                "time_created": 3.1,
+                "time_added": 4.493041,
+                "miner": 4,
+                "consensus": "BigFoot",
+                "size": 0.04,
+                "max_size": 1,
+                "round": 0,
+                "transactions": [
+                    {
+                        "id": 1,
+                        "timestamp": 1,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 3,
+                        "timestamp": 3,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 2,
+                        "timestamp": 2,
+                        "size": 0.01,
+                        "priority": 2
+                    },
+                    {
+                        "id": 0,
+                        "timestamp": 0,
+                        "size": 0.01,
+                        "priority": 1
+                    }
+                ]
+            },
+            {
+                "id": 1085,
+                "depth": 2,
+                "previous": 8167,
+                "time_created": 7.609876,
+                "time_added": 8.97541,
+                "miner": 2,
+                "consensus": "BigFoot",
+                "size": 0.04,
+                "max_size": 1,
+                "round": 1,
+                "transactions": [
+                    {
+                        "id": 5,
+                        "timestamp": 5,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 6,
+                        "timestamp": 6,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 7,
+                        "timestamp": 7,
+                        "size": 0.01,
+                        "priority": 2
+                    },
+                    {
+                        "id": 4,
+                        "timestamp": 4,
+                        "size": 0.01,
+                        "priority": 1
+                    }
+                ]
+            }
+        ],
+        "pool": [
+            {
+                "id": 8,
+                "timestamp": 8,
+                "size": 0.01,
+                "priority": 2
+            },
+            {
+                "id": 9,
+                "timestamp": 9,
+                "size": 0.01,
+                "priority": 1
+            }
+        ],
+        "neighbours": [
+            2,
+            4
+        ],
+        "location": "Dallas",
+        "bandwidth": 1,
+        "state": {
+            "synced": true,
+            "alive": true,
+            "cp": "BigFoot"
+        }
+    },
+    "4": {
+        "id": 4,
+        "blockchain": [
+            {
+                "id": 8167,
+                "depth": 1,
+                "previous": 6164,
+                "time_created": 3.1,
+                "time_added": 4.535456,
+                "miner": 4,
+                "consensus": "BigFoot",
+                "size": 0.04,
+                "max_size": 1,
+                "round": 0,
+                "transactions": [
+                    {
+                        "id": 1,
+                        "timestamp": 1,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 3,
+                        "timestamp": 3,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 2,
+                        "timestamp": 2,
+                        "size": 0.01,
+                        "priority": 2
+                    },
+                    {
+                        "id": 0,
+                        "timestamp": 0,
+                        "size": 0.01,
+                        "priority": 1
+                    }
+                ]
+            },
+            {
+                "id": 1085,
+                "depth": 2,
+                "previous": 8167,
+                "time_created": 7.609876,
+                "time_added": 9.017825,
+                "miner": 2,
+                "consensus": "BigFoot",
+                "size": 0.04,
+                "max_size": 1,
+                "round": 1,
+                "transactions": [
+                    {
+                        "id": 5,
+                        "timestamp": 5,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 6,
+                        "timestamp": 6,
+                        "size": 0.01,
+                        "priority": 3
+                    },
+                    {
+                        "id": 7,
+                        "timestamp": 7,
+                        "size": 0.01,
+                        "priority": 2
+                    },
+                    {
+                        "id": 4,
+                        "timestamp": 4,
+                        "size": 0.01,
+                        "priority": 1
+                    }
+                ]
+            }
+        ],
+        "pool": [
+            {
+                "id": 8,
+                "timestamp": 8,
+                "size": 0.01,
+                "priority": 2
+            },
+            {
+                "id": 9,
+                "timestamp": 9,
+                "size": 0.01,
+                "priority": 1
+            }
+        ],
+        "neighbours": [
+            1,
+            3
+        ],
+        "location": "Heredia",
+        "bandwidth": 1,
+        "state": {
+            "synced": true,
+            "alive": true,
+            "cp": "BigFoot"
+        }
+    }
+}

@@ -1,6 +1,7 @@
 import random
 import copy
 
+from Chain.Parameters import Parameters
 class Block:
     '''
         Defines the block - a basic component of the blockchain
@@ -50,8 +51,9 @@ class Block:
             "miner": self.miner,
             "consensus": self.consensus.NAME,
             "size": self.size,
+            "max_size": Parameters.data["Bsize"],
             "round": self.extra_data["round"],
-            "transactions": [x for x in self.transactions]
+            "transactions": [x.to_serializable() for x in self.transactions]
         }
     
     @staticmethod

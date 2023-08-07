@@ -25,10 +25,11 @@ class Simulation:
 
         self.q = Queue()
 
-    def init_simulation(self, CP):
+    def init_simulation(self, generate_txions=True, generate_event = True):
         genesis = Block.genesis_block()
 
-        Parameters.simulation['txion_model'].generate_interval_txions(self.clock)
+        if generate_txions:
+            Parameters.simulation['txion_model'].generate_interval_txions(self.clock)
 
         for n in self.nodes:
             n.add_block(genesis, self.clock)
@@ -67,10 +68,10 @@ class Simulation:
 
 
     def run_simulation(self):
-        state = self.sim_next_event()
+        self.sim_next_event()
 
         while self.clock <= Parameters.simulation['simTime']:
-            state = self.sim_next_event(state)
+            self.sim_next_event()
         
         dist = {node.id: 0 for node in self.nodes}
 

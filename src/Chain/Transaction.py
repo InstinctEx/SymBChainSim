@@ -20,6 +20,12 @@ class Transaction():
     def __repr__(self) -> str:
         return f"TxID:{self.id}"
 
+    def to_serializable(self):
+        return {
+            "id": self.id,
+            "timestamp": self.timestamp,
+            "size": self.size
+        }
 class PriorityTransaction(Transaction):
     '''
         Models a priority transaction 
@@ -38,6 +44,14 @@ class PriorityTransaction(Transaction):
     
     def __repr__(self) -> str:
         return f"TxID:{self.id}|Prio:{self.priority}"
+    
+    def to_serializable(self):
+        return {
+            "id": self.id,
+            "timestamp": self.timestamp,
+            "size": self.size,
+            "priority": self.priority
+        }
 
 class TransactionFactory:
     '''
@@ -54,9 +68,26 @@ class TransactionFactory:
         for node in self.nodes:
             node.pool.append(tx)
 
+    def add_interval_transactions(self, txions, use_priority):
+        '''
+            Used to add transactions (FOR THE CURRENT INTERVAL)
+            from an external source to the blockchain system
+
+            txions should be a dictionary with the following keys
+            {id:int, timestamp:double , size:double, (priority:int if use_priority == True)}
+        '''
+
+        for tx in txions:
+            if use_priority:
+                t = Transaction(tx["id"], tx["timestamp"], tx["size"], tx["priority"])
+            else:
+                t = Transaction(tx["id"], tx["timestamp"], tx["size"])
+
+            self.transaction_prop(t)
+
     def generate_interval_txions(self, start):
         '''
-            Generates the transactions for a time interval
+            Generates transactions for a time interval
         '''
         for second in range(round(start), round(start + Parameters.application["TI_dur"])):
             for _ in range(Parameters.application["Tn"]):

@@ -58,7 +58,6 @@ class Node():
         self.id = id
         self.blockchain = []
         self.pool = []
-        self.blocks = 0
 
         self.neighbours = None
         self.location = None
@@ -151,8 +150,7 @@ class Node():
         return {
             "id": self.id,
             "blockchain": [x.to_serializable() for x in self.blockchain[1:]], # ignore genesis block
-            "pool": self.pool,
-            "blocks": self.blocks,
+            "pool": [x.to_serializable() for x in self.pool],
 
             "neighbours": [x.id for x in self.neighbours], 
 
@@ -165,7 +163,7 @@ class Node():
                 "cp": self.cp.NAME
             },
 
-            "behaviour": self.behaviour
+            #"behaviour": self.behaviour
         }
 
     def update(self, time, round=-1):

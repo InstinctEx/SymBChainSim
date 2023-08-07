@@ -1,3 +1,4 @@
+import json
 class SimulationState:
     '''
         Stores the state of the simulation.
@@ -11,9 +12,19 @@ class SimulationState:
             store_state can be called given a simulator object.
             store_state serializes and stores the simulator state
         ''' 
+        SimulationState.blockchain_state["timestamp"] = sim.clock
         for n in sim.nodes:
             SimulationState.blockchain_state[n.id] = n.to_serializable()
     
+    @staticmethod
+    def write_state_to_disk():
+        # Serializing json
+        json_object = json.dumps(SimulationState.blockchain_state, indent=4)
+        
+        # Writing to sample.json
+        with open("state.json", "w") as outfile:
+            outfile.write(json_object)
+
     @staticmethod
     def load_state(sim):
         pass
