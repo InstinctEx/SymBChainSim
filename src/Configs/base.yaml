@@ -1,6 +1,6 @@
 simulation:
-  init_CP: "PBFT"  # Consesus protocol to be used
-  simTime: 600  # Simulation run time       
+  init_CP: "BigFoot"  # Consesus protocol to be used
+  simTime: 1200  # Simulation run time       
   ##################################################   
   interval_switch: False # Switch between PBFT and BigFoot in intervals (USED FOR EVALUATING SWITCHING ALGORITHM / DEBUGGING)
   interval_mean: 30 # mean duration of switch intervals
@@ -8,8 +8,10 @@ simulation:
 application:
   Nn: 5 # Number of nodes in the system
   TI_dur: 25  # Duration of time interval (SBS functions using time intervals in each interval txions are generated, and the system parameters can be updated)
-  Tn: 25 # Number of transactions to be generated per second
+  Tn: 50 # Number of transactions to be generated per second
   Tsize: 0.01 # Size of transactions
+
+  usePriorityTransactions: True 
 
 execution:
   creation_time: 0.1 # block creation time
@@ -34,7 +36,7 @@ network:
   bandwidth: # in MB/s
     mean: 5
     dev: 2
-    debug: False # will set all BW to the same value (used for debbugging)
+    debug: True # will set all BW to the same value (used for debbugging)
 
 consensus:
   BigFoot: Chain/Consensus/BigFoot/BigFoot_config.yaml # path to BigFoot config file
