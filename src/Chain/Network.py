@@ -97,8 +97,9 @@ class Network:
             for n in Network.nodes:
                 Network.set_bandwidths(n)
         else:
-            if Parameters.network["bandwidth"]["debug"]:
-                node.bandwidth = 1
+            if Parameters.network["bandwidth"]["uniform"]:
+                node.bandwidth = Parameters.network["bandwidth"]["uniform_value"]
+                print(f"{node} -> UNIFORM NETWORK: {Parameters.network['bandwidth']['uniform_value']}")
             else:
                 node.bandwidth = random.normalvariate(Parameters.network["bandwidth"]["mean"], Parameters.network["bandwidth"]["dev"])
                 # ensuring bandwidth is a possitive non-zero value
