@@ -7,7 +7,7 @@ simulation:
 
 application:
   Nn: 5 # Number of nodes in the system
-  TI_dur: 25  # Duration of time interval (SBS functions using time intervals in each interval txions are generated, and the system parameters can be updated)
+  TI_dur: 20  # Duration of time interval (SBS functions using time intervals in each interval txions are generated, and the system parameters can be updated)
   Tn: 20 # Number of transactions to be generated per second
   Tsize: 0.01 # Size of transactions
 
@@ -20,7 +20,7 @@ execution:
   sync_message_request_delay: 1 # delay of requesting block data for sync
 
 data:
-  Bsize: 1 # block size 
+  Bsize: 1 # block size (MB)
   block_interval: 0.5 # block interval
 
 network:
@@ -36,7 +36,8 @@ network:
   bandwidth: # in MB/s
     mean: 5
     dev: 2
-    debug: True # will set all BW to the same value (used for debbugging)
+    uniform: True # use uniform bandwith (all nodes have the same value)
+    uniform_value : 2
 
 consensus:
   BigFoot: Chain/Consensus/BigFoot/BigFoot_config.yaml # path to BigFoot config file
