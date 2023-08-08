@@ -73,13 +73,13 @@ class TransactionFactory:
             Used to add transactions (FOR THE CURRENT INTERVAL)
             from an external source to the blockchain system
 
-            txions should be a dictionary with the following keys
+            txions should be a list of dictionary with the following keys
             {id:int, timestamp:double , size:double, (priority:int if use_priority == True)}
         '''
 
         for tx in txions:
             if use_priority:
-                t = Transaction(tx["id"], tx["timestamp"], tx["size"], tx["priority"])
+                t = PriorityTransaction(tx["id"], tx["timestamp"], tx["size"], tx["priority"])
             else:
                 t = Transaction(tx["id"], tx["timestamp"], tx["size"])
 
