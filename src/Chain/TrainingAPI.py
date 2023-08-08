@@ -29,6 +29,7 @@ class Blockchain:
         Parameters.application["CP"] = CPs[Parameters.simulation["init_CP"]]
 
         self.sim = Simulation()
+
         self.next_interval = Parameters.application["TI_dur"]
 
         # initialise network
@@ -57,7 +58,7 @@ class Blockchain:
 
         return SimulationState.blockchain_state, finished
     
-def example_for_training():
+def example_for_training_using_generated_txions():
     # dummy data modeling the QL agent
     episodes = range(1)
     
@@ -83,24 +84,32 @@ def example_for_training():
         
         # use the QL to generate the first set of transactions for the first interval
         txions = QL_generate_txions(environment.sim.clock)
+        # if txions are not in the intended format - transafrom 
         # add the first set of transaction for this episode to the pools of the nodes
-        # environment.add_interval_transactions(txions, use_priority=True)
+        environment.add_interval_transactions(txions, use_priority=True)
         # initialise the simulation
         environment.init_simulation()
 
         # until the current episode finishes
         while True:
             # simulate interval
+            print(f"{'-'*10} INTERVAL AT {environment.next_interval} {'-'*10}")
+
             state, finished = environment.simulate_interval()
+
+
+            Metrics.measure_all(state)
+            print(Metrics.print_metrics())
 
             if finished: # episode finished break and start the next episode
                 break
             # episode not finished
 
             # use the state of the blockchain to calculate the reward of the previous action and train
-            QL_training(state)
+            ''' QL_training(state, txions) ''' 
             # alternative store the sate action pair and train at the end of the episode (depends on how you want to train your agent)
 
             # generate and add the next set of generated transactions to the system
             txions = QL_generate_txions(environment.sim.clock)
-            #environment.add_interval_transactions(txions, use_priority=True)
+            environment.add_interval_transactions(txions, use_priority=True)
+ 

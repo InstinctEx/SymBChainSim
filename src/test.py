@@ -1,0 +1,3 @@
+from Chain.TrainingAPI import example_for_training_using_generated_txions
+
+example_for_training_using_generated_txions()
