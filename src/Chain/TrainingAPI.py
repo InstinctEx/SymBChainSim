@@ -21,10 +21,10 @@ class Blockchain:
         self.sim = None
         self.next_interval = None
 
-    def init_training_evnironment(self):
+    def init_training_evnironment(self, config="base.yaml"):
         # load params (cmd and env)
         tools.set_env_vars_from_config()
-        Parameters.load_params_from_config()
+        Parameters.load_params_from_config(config)
 
         Parameters.application["CP"] = CPs[Parameters.simulation["init_CP"]]
 

@@ -21,6 +21,7 @@ class TransactionFactory:
         '''
             Models the propagations of transactions to nodes
                 note: Propagation delays can be accounted for here
+                Named tuples are IMMUTABLE! Create new tuples based on the TX with the new timestamps
         '''
         for node in self.nodes:
             node.pool.append(tx)
