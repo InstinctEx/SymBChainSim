@@ -3,7 +3,7 @@ class SimulationState:
     '''
         Stores the state of the simulation.
     '''
-    blockchain_state = {}
+    blockchain_state = {"blockchain": {}}
     events = {"consensus":{}, "other": {}}
 
     @staticmethod
@@ -14,7 +14,7 @@ class SimulationState:
         ''' 
         SimulationState.blockchain_state["timestamp"] = sim.clock
         for n in sim.nodes:
-            SimulationState.blockchain_state[n.id] = n.to_serializable()
+            SimulationState.blockchain_state["blockchain"][n.id] = n.to_serializable()
     
     @staticmethod
     def write_state_to_disk():
