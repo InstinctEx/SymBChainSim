@@ -53,7 +53,7 @@ class Block:
             "size": self.size,
             "max_size": Parameters.data["Bsize"],
             "round": self.extra_data["round"],
-            "transactions": [x.to_serializable() for x in self.transactions]
+            "transactions": [x for x in self.transactions]
         }
     
     @staticmethod

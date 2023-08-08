@@ -54,7 +54,7 @@ class Metrics:
             Metrics.latency[node_id] = {"values": {}}
             for b in node_state["blockchain"]:
                 Metrics.latency[node_id]["values"][b["id"]] = st.mean(
-                    [b["time_added"] - t["timestamp"] for t in b["transactions"]]
+                    [b["time_added"] - t.timestamp for t in b["transactions"]]
                 )
             
             Metrics.latency[node_id]["AVG"] = st.mean(
@@ -64,9 +64,7 @@ class Metrics:
     @staticmethod
     def measure_throughput(bc_state):
         """
-            Measured as:  sum_processed_txions / simTime
-
-            TODO: Measure in intervals (possibly missleading??)
+            Measured as:  sum_processed_txions / timestamp of state snapshot
         """
         for node_id, node_state in bc_state["blockchain"].items():
             sum_tx = sum([len(x["transactions"]) for x in node_state["blockchain"]])

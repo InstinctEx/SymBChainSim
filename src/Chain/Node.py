@@ -150,7 +150,7 @@ class Node():
         return {
             "id": self.id,
             "blockchain": [x.to_serializable() for x in self.blockchain[1:]], # ignore genesis block
-            "pool": [x.to_serializable() for x in self.pool],
+            "pool": [x for x in self.pool],
 
             "neighbours": [x.id for x in self.neighbours], 
 

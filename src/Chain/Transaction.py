@@ -4,54 +4,11 @@ import random, sys, numpy as np
 
 from bisect import insort
 
+from collections import namedtuple
 
-class Transaction():
-    '''
-        Models the most basic transaction in a blockchain system
-    '''
-    def __init__(self, id, timestamp, size) -> None:
-        self.id = id
-        self.timestamp = timestamp
-        self.size = size
-    
-    def __str__(self) -> str:
-        return f"[TxID:{self.id}, TS:{self.timestamp}, s:{self.size}]"
-    
-    def __repr__(self) -> str:
-        return f"TxID:{self.id}"
+Transaction = namedtuple("Transaction", "id, timestamp, size")
 
-    def to_serializable(self):
-        return {
-            "id": self.id,
-            "timestamp": self.timestamp,
-            "size": self.size
-        }
-class PriorityTransaction(Transaction):
-    '''
-        Models a priority transaction 
-            Priority transactions are packed into blocks
-            based on their priority value 
-            
-            The greater the priority value the greater the priority
-    '''
-    def __init__(self, id, timestamp, size, priority) -> None:
-        super().__init__(id, timestamp, size)
-
-        self.priority = priority
-    
-    def __str__(self) -> str:
-        return f"[TxID:{self.id}, TS:{self.timestamp}, s:{self.size}, prio:{self.priority}]"
-    
-    def __repr__(self) -> str:
-        return f"TxID:{self.id}|Prio:{self.priority}"
-    
-    def to_serializable(self):
-        return {
-            "id": self.id,
-            "timestamp": self.timestamp,
-            "size": self.size,
-            "priority": self.priority
-        }
+PriorityTransaction = namedtuple("PriorityTransaction", "id, timestamp, size, priority")
 
 class TransactionFactory:
     '''
