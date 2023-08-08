@@ -49,11 +49,12 @@ class Metrics:
 
     @staticmethod
     def measure_latency(bc_state):
-        for node_id, node_state in bc_state.items():
+        for node_id, node_state in bc_state["blockchain"].items():
+
             Metrics.latency[node_id] = {"values": {}}
             for b in node_state["blockchain"]:
                 Metrics.latency[node_id]["values"][b["id"]] = st.mean(
-                    [b["time_added"] - t.timestamp for t in b["transactions"]]
+                    [b["time_added"] - t["timestamp"] for t in b["transactions"]]
                 )
             
             Metrics.latency[node_id]["AVG"] = st.mean(
@@ -67,13 +68,13 @@ class Metrics:
 
             TODO: Measure in intervals (possibly missleading??)
         """
-        for node_id, node_state in bc_state.items():
+        for node_id, node_state in bc_state["blockchain"].items():
             sum_tx = sum([len(x["transactions"]) for x in node_state["blockchain"]])
-            Metrics.throughput[node_id] = sum_tx/Parameters.simulation["simTime"]
+            Metrics.throughput[node_id] = sum_tx/bc_state["timestamp"]
 
     @staticmethod
     def measure_interblock_time(bc_state):
-        for node_id, node_state in bc_state.items():
+        for node_id, node_state in bc_state["blockchain"].items():
             # for each pair of blocks create the key valie pair "curr -> next": next.time_added - curre.time_added
             diffs = { f"{curr['id']} -> {next['id']}" : next["time_added"] - curr["time_added"] 
                      for curr, next in zip(node_state["blockchain"][:-1], node_state["blockchain"][1:]) }
@@ -122,8 +123,8 @@ class Metrics:
                         calculating decentralisaion seperatatly for each interval where nodes are "stable"
                         average the decentralisations out
         '''        
-        nodes = [int(x) for x in bc_state.keys()]
-        for node_id, node_state in bc_state.items():
+        nodes = [int(x) for x in bc_state["blockchain"].keys()]
+        for node_id, node_state in bc_state["blockchain"].items():
             block_distribution = {x:0 for x in nodes}
             total_blocks = len(node_state["blockchain"])
 
