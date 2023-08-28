@@ -1,3 +1,3 @@
-from Chain.TrainingAPI import example_for_training_using_generated_txions
+from Chain.TrainingAPI import test_enviroment
 
-example_for_training_using_generated_txions()
+test_enviroment()

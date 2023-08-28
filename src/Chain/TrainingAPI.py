@@ -15,6 +15,50 @@ CPs = {
     BigFoot.NAME: BigFoot
 }
 
+def extract_congestion(state):
+    '''
+        Given a blockchain state, extracts the number of transactions in the pool of each node
+            returns a dictionary of the following schema:
+                {
+                    node_id1: {
+                        prio1: num_txions_of_prio1,
+                        prio2: num_txions_of_prio2 
+                        ... 
+                    }
+                    node_id2:{
+                        prio1: num_txions_of_prio1,
+                        prio2: num_txions_of_prio2 
+                        ... 
+                    }
+                    ....
+                }
+    '''
+    
+    txions_in_pool = {}
+    # for each node in the blockchain state
+    for node, node_state in state["blockchain"].items():
+        # craete a dictionary to store the txions with prio as a key
+        prio_txions = {}
+        for t in node_state["pool"]:
+            if t.priority in prio_txions.keys():
+                # if the priority level is allready in the list append txion to that prio
+                prio_txions[t.priority].append(t)
+            else:
+                # if this is the first time we see that prio: create the dict key first then add txions
+                prio_txions[t.priority] = []
+                prio_txions[t.priority].append(t)
+
+        txions_in_pool[node] = prio_txions
+
+    # count the stored transactions for each node and compile a dictionary
+    congestion_per_node = {}
+    for key, value in txions_in_pool.items():
+        congestion_per_node[key] = {}
+        for prio, list_tx in value.items():
+            congestion_per_node[key][prio] = len(list_tx)
+
+    return congestion_per_node
+
 class Blockchain:
     def __init__(self):
         # create simulator
@@ -81,11 +125,20 @@ def example_for_training_using_generated_txions():
     for ep in episodes:
         # initialise the enviroment
         environment.init_training_evnironment()
-        
+
         # use the QL to generate the first set of transactions for the first interval
         txions = QL_generate_txions(environment.sim.clock)
         # if txions are not in the intended format - transafrom 
         # add the first set of transaction for this episode to the pools of the nodes
+
+        txions = [
+            {id, timestamp, size, priority},
+            {id, timestamp, size, priority},
+            {id, timestamp, size, priority},
+            {id, timestamp, size, priority},
+            {id, timestamp, size, priority},
+        ] 
+
         environment.add_interval_transactions(txions, use_priority=True)
         # initialise the simulation
         environment.init_simulation()
@@ -96,7 +149,6 @@ def example_for_training_using_generated_txions():
             print(f"{'-'*10} INTERVAL AT {environment.next_interval} {'-'*10}")
 
             state, finished = environment.simulate_interval()
-
 
             Metrics.measure_all(state)
             print(Metrics.print_metrics())
@@ -113,3 +165,29 @@ def example_for_training_using_generated_txions():
             txions = QL_generate_txions(environment.sim.clock)
             environment.add_interval_transactions(txions, use_priority=True)
  
+
+def test_enviroment():
+    environment = Blockchain()
+    
+    # initialise the enviroment
+    environment.init_training_evnironment()
+
+    Parameters.simulation["txion_model"].generate_interval_txions(environment.sim.clock)
+
+    # initialise the simulation
+    environment.init_simulation()
+
+    while True:
+        # simulate interval
+        print(f"{'-'*10} INTERVAL AT {environment.next_interval} {'-'*10}")
+
+        state, finished = environment.simulate_interval()
+
+        extract_congestion(state)
+
+        if finished: # episode finished break and start the next episode
+            break
+        # episode not finished
+
+        # generate and add the next set of generated transactions to the system
+        Parameters.simulation["txion_model"].generate_interval_txions(environment.sim.clock)
