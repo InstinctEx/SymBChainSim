@@ -95,9 +95,23 @@ class Metrics:
         # calculate what percentage is the area between the lorenze cruve and the actual curve
         return 1 - act_area / lor_area
         
+    def gini_coeficient_rmad(values):
+        '''
+            An alternative approach is to define the Gini coefficient
+            as half of the relative mean absolute difference, which is
+            equivalent to the definition based on the Lorenz curve.
+        '''
+        enum = 0
+        for x_i in values:
+            for x_j in values:
+                enum += abs(x_i - x_j)
+        
+        n = len(values)
+
+        return enum / (2 * (n*n) * st.mean(values))
 
     @staticmethod
-    def measure_decentralisation_nodes(bc_state):
+    def measure_decentralisation_nodes(bc_state, rmad=True):
         '''
             TODO: 
                 Consider how nodes entering and exiting the consensus can be taken into account
@@ -122,6 +136,7 @@ class Metrics:
                         average the decentralisations out
         '''        
         nodes = [int(x) for x in bc_state["blockchain"].keys()]
+
         for node_id, node_state in bc_state["blockchain"].items():
             block_distribution = {x:0 for x in nodes}
             total_blocks = len(node_state["blockchain"])
@@ -129,10 +144,13 @@ class Metrics:
             for b in node_state["blockchain"]:
                 block_distribution[b["miner"]] += 1
 
-            dist = sorted([(key, value) for key, value in block_distribution.items()], key=lambda x:x[1])
-            dist = [(x[0], x[1]/total_blocks) for x in dist]        
-            cumulative_dist = [sum([x[1] for x in dist[:i+1]]) for i in range(len(dist))]
-                
-            gini = Metrics.gini_coeficient(cumulative_dist)
+            if rmad == True:
+                gini = Metrics.gini_coeficient_rmad(block_distribution.values())
+            else:
+                dist = sorted([(key, value) for key, value in block_distribution.items()], key=lambda x:x[1])
+                dist = [(x[0], x[1]/total_blocks) for x in dist]        
+                cumulative_dist = [sum([x[1] for x in dist[:i+1]]) for i in range(len(dist))]
+                    
+                gini = Metrics.gini_coeficient(cumulative_dist)
 
             Metrics.decentralisation[node_id] = gini
